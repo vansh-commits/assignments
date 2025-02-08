@@ -4,6 +4,25 @@
 */
 
 function isPalindrome(str) {
+  str = str.toLowerCase();
+  let fltrString = "";
+  for(let i = 0 ; i<str.length ; i++){
+    if('qwertyuiopasdfghjklzxcvbnm'.includes(str[i])){
+      fltrString += str[i];
+    }
+  }
+
+  str = fltrString;
+
+  let start =0;
+  let end = str.length -1;
+  while(start<=end){
+    if(str[start] != str[end]){
+      return false;
+    }
+    start++;
+    end--;
+  }
   return true;
 }
 
