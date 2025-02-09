@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.37% </span>
+                <span class="strong">93.93% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>29/37</span>
+                <span class='fraction'>31/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/3</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.37% </span>
+                <span class="strong">93.93% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>29/37</span>
+                <span class='fraction'>31/33</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -95,11 +95,7 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -110,20 +106,15 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -133,6 +124,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const request = require('supertest');
@@ -148,28 +140,24 @@ let userCount = 0;
 // 1. Ensure that if there is ever an exception, the end user sees a status code of 404
 // 2. Maintain the errorCount variable whose value should go up every time there is an exception in any endpoint
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >function postMiddleware(req, res, next){</span></span>
-<span class="cstat-no" title="statement not covered" >  userCount++;</span>
-<span class="cstat-no" title="statement not covered" >  next();</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+function globalCatch(err, req, res, next){
+  res.status(404).json({msg : "User not found"});
+  errorCount++;
+}
 &nbsp;
 app.get('/user', function(req, res) {
-  if(userCount==0){
-    errorCount++;
-    res.status(404).json({msg : "User not found"});
-  }<span class="branch-0 cbranch-no" title="branch not covered" >else{</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    res.status(200).json({ name: 'john' });</span>
-<span class="cstat-no" title="statement not covered" >  }</span>
+  throw new Error("some error")<span class="branch-0 cbranch-no" title="branch not covered" >;</span>
+<span class="cstat-no" title="statement not covered" >  res.status(200).json({ name: 'john' });</span>
 });
 &nbsp;
-app.post('/user',postMiddleware, function(req, res) {
+app.post('/user', function(req, res) {
 <span class="cstat-no" title="statement not covered" >  res.status(200).json({ msg: 'created dummy user' });</span>
 });
 &nbsp;
 app.get('/errorCount', function(req, res) {
   res.status(200).json({ errorCount });
 });
+app.use(globalCatch);
 &nbsp;
 module.exports = app;</pre></td></tr></table></pre>
 
@@ -178,7 +166,7 @@ module.exports = app;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-02-09T09:43:37.505Z
+                at 2025-02-09T09:52:00.702Z
             </div>
         <script src="prettify.js"></script>
         <script>

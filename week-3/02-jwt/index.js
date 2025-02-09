@@ -15,6 +15,7 @@ const jwtPassword = 'secret';
  */
 function signJwt(username, password) {
     // Your code here
+    
 }
 
 /**
@@ -27,6 +28,8 @@ function signJwt(username, password) {
  */
 function verifyJwt(token) {
     // Your code here
+    let decoded = jwt.verify(token, jwtPassword);
+    let 
 }
 
 /**
