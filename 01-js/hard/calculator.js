@@ -16,6 +16,76 @@
   Once you've implemented the logic, test your code by running
 */
 
-class Calculator {}
+class Calculator {
+  constructor() {
+      this.result = 0;
+  }
+
+  add(number) {
+      this.result += number;
+      return this;
+  }
+
+  subtract(number) {
+      this.result -= number;
+      return this;
+  }
+
+  multiply(number) {
+      this.result *= number;
+      return this;
+  }
+
+  divide(number) {
+      if (number == '0') {
+        let err = new Error("Cannot divide by zero");
+        throw err;
+      };
+      this.result /= number;
+      return this;
+  }
+
+  clear() {
+      this.result = 0;
+      return this;
+  }
+
+  getResult() {
+      return this.result;
+  }
+
+  calculate(expression) {
+    if (typeof expression !== "string" || expression.trim() === "") {
+      throw new Error("Invalid mathematical expression");
+  }
+  
+  let cleanedExpression = "";
+  for (let i = 0; i < expression.length; i++) {
+      if (expression[i] !== ' ') {
+          cleanedExpression += expression[i];
+      }
+  }
+  
+  for (let char of cleanedExpression) {
+      if (!(char >= '0' && char <= '9') && "+-*/().".indexOf(char) === -1) {
+          throw new Error("Invalid characters in expression");
+      }
+  }
+  
+  if (cleanedExpression.includes("/0")) {
+      throw new Error("Cannot divide by zero");
+  }
+  
+  try {
+      this.result = Function(`'use strict'; return (${cleanedExpression})`)();
+      if (typeof this.result !== "number" || isNaN(this.result) || !isFinite(this.result)) {
+          throw new Error("Invalid mathematical expression");
+      }
+      return this.result;
+  } catch {
+      throw new Error("Invalid mathematical expression");
+  }
+  }
+}
 
 module.exports = Calculator;
