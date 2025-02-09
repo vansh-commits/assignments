@@ -16,6 +16,31 @@ setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
 
+function adduser(req, res, next){
+  let user = req.headers["user-id"]
+  if(numberOfRequestsForUser.hasOwnProperty(user)){
+    numberOfRequestsForUser[user] ++;
+  }else{
+    numberOfRequestsForUser[user] = 1
+  }
+  next();
+}
+
+function rateLimit(req, res, next){
+  let user = req.headers["user-id"]
+  if(numberOfRequestsForUser[user] > 5){
+    return res.status(404).json({ error: "Rate limit exceeded" });
+  }else{
+    next();
+  }
+  
+
+}
+
+app.use(adduser);
+app.use(rateLimit);
+
+
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
 });
